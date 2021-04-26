@@ -6,11 +6,12 @@ const chat = require('./sockets/chat')
 
 // Socket.io
 const io = require('socket.io')(server);
-io.on("connection", (socket) => {
-  // This file will be read on new socket connections
-  require('./sockets/chat.js')(io, socket);
-})
 
+let onlineUsers = {};
+io.on("connection", (socket) => {
+  // Make sure to send the users to our chat file
+  require('./sockets/chat.js')(io, socket, onlineUsers);
+})
 const exphbs  = require('express-handlebars');
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');

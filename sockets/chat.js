@@ -21,11 +21,15 @@ module.exports = (io, socket, onlineUsers) => {
   })
 
   // This fires when a user closes out of the application
-// socket.on("disconnect") is a special listener that fires when a user exits out of the application.
-socket.on('disconnect', () => {
-  //This deletes the user by using the username we saved to the socket
-  delete onlineUsers[socket.username]
-  io.emit('user has left', onlineUsers);
-});
+  // socket.on("disconnect") is a special listener that fires when a user exits out of the application.
+  socket.on('disconnect', () => {
+    //This deletes the user by using the username we saved to the socket
+    delete onlineUsers[socket.username]
+    io.emit('user has left', onlineUsers);
+  });
+
+  socket.on('new channel', (newChannel) => {
+      console.log(newChannel);
+    })
 
 }

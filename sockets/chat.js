@@ -11,15 +11,21 @@ module.exports = (io, socket, onlineUsers, channels) => {
   })
 
   socket.on('new message', (data) => {
-  //Save the new message to the channel.
-  channels[data.channel].push({sender : data.sender, message : data.message});
-  //Emit only to sockets that are in that channel room.
-  io.to(data.channel).emit('new message', data);
+    //Save the new message to the channel.
+    channels[data.channel].push({sender : data.sender, message : data.message});
+    //Emit only to sockets that are in that channel room.
+    io.to(data.channel).emit('new message', data);
   });
 
   socket.on('get online users', () => {
-  //Send over the onlineUsers
-  socket.emit('get online users', onlineUsers);
+    //Send over the onlineUsers
+    socket.emit('get online users', onlineUsers);
+  })
+
+  socket.on('get all channels', () => {
+    // Send over the channels
+
+    socket.emit('get all channels', channels)
   })
 
   // This fires when a user closes out of the application

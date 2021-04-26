@@ -4,6 +4,7 @@ $(document).ready(() => {
   const socket = io.connect();
   let currentUser;
   socket.emit('get online users');
+  socket.emit('get all channels')
   //Each user should be in the general channel by default.
   socket.emit('user changed channel', "General");
 
@@ -76,13 +77,13 @@ $(document).ready(() => {
   });
 
   $('#new-channel-btn').click( () => {
-  let newChannel = $('#new-channel-input').val();
-
-  if(newChannel.length > 0){
-    // Emit the new channel to the server
-    socket.emit('new channel', newChannel);
-    $('#new-channel-input').val("");
-  }
+    let newChannel = $('#new-channel-input').val();
+    console.log(`newChannel: ${newChannel}`)
+    if(newChannel.length > 0){
+      // Emit the new channel to the server
+      socket.emit('new channel', newChannel);
+      $('#new-channel-input').val("");
+    }
   })
 
 
